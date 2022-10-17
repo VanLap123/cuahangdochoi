@@ -2,7 +2,7 @@
 //  $conn= mysqli_connect('localhost', 'root', '','online_shopping')
 //          or die("Can not connect database".mysqli_connect_error());
  
- $Connect = pg_connect("postgres://gzrjiolcnnctoo:aff34d0d5a82e271fd03fcd00380037124d4a2dfcb3d1db6a407055b6de90ca4@ec2-3-214-2-141.compute-1.amazonaws.com:5432/d9455klrqhdq0a");	
+ $Connect = pg_connect("postgres://rbbhhkldicjtjf:8bedc6d832017bc8c798766400482a57fe2cfff5308fc5bbe962e22b64a06586@ec2-52-200-5-135.compute-1.amazonaws.com:5432/d2skp77qhslna8");	
      if (!$Connect) {
          die("Connection failed");
      }
