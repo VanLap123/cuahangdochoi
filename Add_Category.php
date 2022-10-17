@@ -10,7 +10,7 @@
 	{
 		$id = $_POST["txtID"];
 		$name = $_POST["txtName"];
-		$des = $_POST["txtDes"];
+	
 		$err="";
 		if($id=="")
 		{
@@ -25,11 +25,11 @@
 			echo "<ul>$err</ul>";
 		}
 		else{
-			$sq="Select * from category where Cat_ID='$id' or Cat_Name='$name'";
-			$result = mysqli_query($conn,$sq);
-			if(mysqli_num_rows($result)==0)
+			$sq="Select * from Category where CategoryID='$id' or CategoryName='$name'";
+			$result = pg_query($conn,$sq);
+			if(pg_num_rows($result)==0)
 			{
-				mysqli_query($conn,"INSERT INTO category (Cat_ID, Cat_Name, Cat_Des) VALUES ('$id', '$name', '$des')");
+				pg_query($conn,"INSERT INTO Category (CategoryID, CategoryName) VALUES ('$id', '$name')");
 				echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
 			}
 			else
@@ -57,12 +57,6 @@
 							</div>
 					</div>
                     
-                    <div class="form-group">
-						    <label for="txtMoTa" class="col-sm-2 control-label">Description(*):  </label>
-							<div class="col-sm-10">
-							      <input type="text" name="txtDes" id="txtDes" class="form-control" placeholder="Description" value='<?php echo isset($_POST["txtDes"])?($_POST["txtDes"]):"";?>'>
-							</div>
-					</div>
                     
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">

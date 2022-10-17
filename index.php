@@ -10,7 +10,6 @@
  include_once("connection.php");
 ?>
 
-	
 	<header class="sticky-top">
 		<div class="container">
 			<div class="row">
@@ -105,7 +104,56 @@ function showSlides() {
   setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
 </script>
-	
+<?php
+	if(isset($_GET['page']))
+    {
+        $page = $_GET['page'];
+        if($page=="register")
+        {
+            include_once("Register.php");
+        }
+        elseif($page=="login")
+        {
+            include_once("Login.php");
+        }
+        elseif($page=="category_management")
+        {
+            include_once("Category_Management.php");
+        }
+        elseif($page=="product_management")
+        {
+            include_once("Product_Management.php");
+        }
+        elseif($page=="add_category")
+        {
+            include_once("Add_Category.php");
+        }
+        elseif($page=="update_category")
+        {
+            include_once("Update_Category.php");
+        }
+		    elseif($page=="add_product")
+        {
+            include_once("Add_Product.php");
+        }
+        elseif($page=="update_product")
+        {
+            include_once("Update_Product.php");
+        }
+        elseif($page=="update_customer")
+        {
+            include_once("Update_Customer.php");
+        }
+        elseif($page=="logout")
+        {
+            include_once("Logout.php");
+        }
+    }
+    else
+        {
+            include("Content.php");
+        }
+?>
 		
 	<footer>
 		<div class="container">

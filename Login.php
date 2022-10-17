@@ -28,10 +28,10 @@
 		{
 			include_once("connection.php");
 			$pass = md5($pa);
-			$res = mysqli_query($conn, "SELECT Username, Password, state FROM Customer WHERE Username='$us' AND Password='$pass'")
+			$res = pg_query($conn, "SELECT Username, Password, state FROM Customer WHERE Username='$us' AND Password='$pass'")
 			or die(mysqli_error($conn));
-			$row = mysqli_fetch_array($res,MYSQLI_ASSOC);
-			if(mysqli_num_rows($res)==1)
+			$row = pg_fetch_array($res);
+			if(pg_num_rows($res)==1)
 			{
 				$_SESSION["us"] = $us;
 				$_SESSION["admin"] = $row["state"];
