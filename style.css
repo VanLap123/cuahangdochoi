@@ -16,7 +16,7 @@
 	margin-right: -15px;
 }
 header {
-	background-color:#FA8258;
+	background-color:#100f0e;
 	padding: 10px 0 10px 0;
 }
 a:hover {
@@ -70,7 +70,7 @@ p {
 ul.menu_child {
 	position: absolute;
 	width: 225px;
-	background-color: #FA8258;
+	background-color: #0e0e0e;
 	z-index: 9999;
 
 }
