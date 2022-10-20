@@ -22,11 +22,11 @@
     if (isset($_GET["function"]) == "del") {
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
-            $result = mysqli_query($conn,"SELECT Pro_image from product where Product_ID='$id'");
-            $image = mysqli_fetch_array($result);
+            $result = pg_query($conn,"SELECT Pro_image from Product where ProductID='$id'");
+            $image = pg_fetch_array($result);
             $del = $image["Pro_image"];
             unlink("image/$del");
-            mysqli_query($conn, "delete from product where Product_ID='$id'");
+            pg_query($conn, "delete from product where Product_ID='$id'");
             
         }
     }
@@ -41,13 +41,17 @@
         <table id="tableproduct" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th><strong>No.</strong></th>
+                   
                     <th><strong>Product ID</strong></th>
-                    <th><strong>Product Name</strong></th>
-                    <th><strong>Price</strong></th>
-                    <th><strong>Quantity</strong></th>
+                    <th><strong>Shop ID</strong></th>
+                    <th><strong>Supplier ID</strong></th>
                     <th><strong>Category ID</strong></th>
+                    <th><strong>Product Name</strong></th>
+                    <th><strong>Import Price</strong></th>
+                    <th><strong>Sale Price</strong></th>
+                    <th><strong>Description</strong></th>
                     <th><strong>Image</strong></th>
+                    <th><strong>Quantity</strong></th>
                     <th><strong>Edit</strong></th>
                     <th><strong>Delete</strong></th>
                 </tr>
@@ -57,11 +61,11 @@
                 <?php
                 include_once("connection.php");
                 $No = 1;
-                $result = mysqli_query($conn, "SELECT Product_ID, Product_Name, Price, Pro_qty, Pro_image, Cat_Name
+                $result = pg_query($conn, "SELECT Product_ID, Product_Name, Price, Pro_qty, Pro_image, Cat_Name
                     FROM product a, category b
                     WHERE a.Cat_ID = b.Cat_ID
                     ORDER BY ProDate DESC");
-                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                while ($row = pg_fetch_array($result)) {
                 ?>
                     <tr>
                         <td><?php echo $No; ?></td>

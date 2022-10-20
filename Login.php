@@ -28,8 +28,7 @@
 		{
 			include_once("connection.php");
 			$pass = md5($pa);
-			$res = pg_query($conn, "SELECT Username, Password, state FROM Customer WHERE Username='$us' AND Password='$pass'")
-			or die(mysqli_error($conn));
+			$res = pg_query($conn, "SELECT Username, Password, state FROM Customer WHERE Username='$us' AND Password='$pass'");
 			$row = pg_fetch_array($res);
 			if(pg_num_rows($res)==1)
 			{

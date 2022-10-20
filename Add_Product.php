@@ -5,25 +5,53 @@
 	include_once("connection.php");
 	function bind_Category_List($conn)
 	{
-		$sqlstring = "SELECT Cat_ID, Cat_Name from category";
-		$result = mysqli_query($conn, $sqlstring);
+		$sqlstring = "SELECT CategoryID, CategoryName from Category";
+		$result = pg_query($conn, $sqlstring);
 		echo "<select name='CategoryList' class='form-control'>
 					<option value='0'>Choose category</option>";
-		while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-			echo "<option value='" . $row['Cat_ID'] . "'>" . $row['Cat_Name'] . "</option>";
+		while ($row = pg_fetch_array($result)) {
+			echo "<option value='" . $row['CategoryID'] . "'>" . $row['CategoryName'] . "</option>";
 		}
 		echo "</select>";
 	}
+
+	function bind_Shop_List($conn1)
+	{
+		$sqlstring = "SELECT ShopID, ShopName from Shop";
+		$result = pg_query($conn1, $sqlstring);
+		echo "<select name='ShopList' class='form-control'>
+					<option value='0'>Choose shop</option>";
+		while ($row = pg_fetch_array($result)) {
+			echo "<option value='" . $row['ShopID'] . "'>" . $row['ShopName'] . "</option>";
+		}
+		echo "</select>";
+	}
+
+	function bind_Supplier_List($conn2)
+	{
+		$sqlstring = "SELECT SupplierID, SupplierName from Supplier";
+		$result = pg_query($conn2, $sqlstring);
+		echo "<select name='SupplierList' class='form-control'>
+					<option value='0'>Choose supplier</option>";
+		while ($row = pg_fetch_array($result)) {
+			echo "<option value='" . $row['SupplierID'] . "'>" . $row['SupplierName'] . "</option>";
+		}
+		echo "</select>";
+	}
+
 	if(isset($_POST["btnAdd"]))
 	{
 		$id = $_POST["txtID"];
-		$proname = $_POST["txtName"];
-		$short = $_POST["txtShort"];
-		$detail = $_POST["txtDetail"];
-		$price = $_POST["txtPrice"];
-		$qty = $_POST["txtQty"];
-		$pic = $_FILES["txtImage"];
+		$shopID = $_POST["ShopList"];
+		$supplierID =$_POST["SupplierList"];
 		$category = $_POST["CategoryList"];
+		$proname = $_POST["txtName"];
+		$priceImport = $_POST["txtImportPrice"];
+		$priceSale = $_POST["txtSalePrice"];
+		$detail = $_POST["txtDetail"];
+		$pic = $_FILES["txtImage"];
+		$qty = $_POST["txtQty"];
+	
 		$err = "";
 
 		if(trim($id) == "")
@@ -56,15 +84,15 @@
 			{
 				if($pic["size"] < 614400)
 				{
-					$sq = "SELECT * FROM product WHERE Product_ID = '$id' or Product_Name = '$proname'";
-					$result = mysqli_query($conn, $sq);
-					if(mysqli_num_rows($result) == 0)
+					$sq = "SELECT * FROM Product WHERE ProductID = '$id' or ProductName = '$proname'";
+					$result = pg_query($conn, $sq);
+					if(pg_num_rows($result) == 0)
 					{
 						copy($pic['tmp_name'], "image/".$pic['name']);
 						$filePic = $pic['name'];
-						$sqlstring = "INSERT INTO product (Product_ID, Product_Name, Price, SmallDesc, DetailDesc, ProDate, Pro_qty, Pro_image, Cat_ID)
-										VALUES ('$id', '$proname', '$price', '$short', '$detail', '".date('Y-m-d H:i:s')."', $qty, '$filePic', '$category')";
-						mysqli_query($conn, $sqlstring);
+						$sqlstring = "INSERT INTO Product (ProductID, ShopID, SupplierID, CategoryID, ProductName, ImportPrice, SalePrice, Descriptions,Pro_image, Quantity)
+										VALUES ('$id',$shopID,$supplierID,$category,$proname,$priceImport,$priceSale,$detail,$pic,$qty)";
+						pg_query($conn, $sqlstring);
 						echo '<meta http-equiv="refresh" content = "0; URL=?page=product_management"/>';
 					}
 					else
@@ -94,13 +122,23 @@
     				<input type="text" name="txtID" id="txtID" class="form-control" placeholder="Product ID" value='' />
     			</div>
     		</div>
-    		<div class="form-group">
-    			<label for="txtTen" class="col-sm-2 control-label">Product Name(*): </label>
+			<div class="form-group">
+    			<label for="" class="col-sm-2 control-label">Shop ID(*): </label>
     			<div class="col-sm-10">
-    				<input type="text" name="txtName" id="txtName" class="form-control" placeholder="Product Name" value='' />
+    				<?php
+					bind_Shop_List($conn1);
+					?>
     			</div>
     		</div>
-    		<div class="form-group">
+			<div class="form-group">
+    			<label for="" class="col-sm-2 control-label">Supplier ID(*): </label>
+    			<div class="col-sm-10">
+    				<?php
+					bind_Supplier_List($conn2);
+					?>
+    			</div>
+    		</div>
+			<div class="form-group">
     			<label for="" class="col-sm-2 control-label">Product category(*): </label>
     			<div class="col-sm-10">
     				<?php
@@ -108,18 +146,24 @@
 					?>
     			</div>
     		</div>
-
     		<div class="form-group">
-    			<label for="lblGia" class="col-sm-2 control-label">Price(*): </label>
+    			<label for="txtTen" class="col-sm-2 control-label">Product Name(*): </label>
     			<div class="col-sm-10">
-    				<input type="text" name="txtPrice" id="txtPrice" class="form-control" placeholder="Price" value='' />
+    				<input type="text" name="txtName" id="txtName" class="form-control" placeholder="Product Name" value='' />
     			</div>
     		</div>
+    		
 
     		<div class="form-group">
-    			<label for="lblShort" class="col-sm-2 control-label">Short description(*): </label>
+    			<label for="lblGia" class="col-sm-2 control-label">ImportPrice(*): </label>
     			<div class="col-sm-10">
-    				<input type="text" name="txtShort" id="txtShort" class="form-control" placeholder="Short description" value='' />
+    				<input type="text" name="txtImportPrice" id="txtImportPrice" class="form-control" placeholder="Price" value='' />
+    			</div>
+    		</div>
+			<div class="form-group">
+    			<label for="lblGia" class="col-sm-2 control-label">SalePrice(*): </label>
+    			<div class="col-sm-10">
+    				<input type="text" name="txtSalePrice" id="txtSalePrice" class="form-control" placeholder="Price" value='' />
     			</div>
     		</div>
 
@@ -153,16 +197,15 @@
     		</div>
 
     		<div class="form-group">
-    			<label for="lblSoLuong" class="col-sm-2 control-label">Quantity(*): </label>
-    			<div class="col-sm-10">
-    				<input type="number" name="txtQty" id="txtQty" class="form-control" placeholder="Quantity" value="" />
-    			</div>
-    		</div>
-
-    		<div class="form-group">
     			<label for="sphinhanh" class="col-sm-2 control-label">Image(*): </label>
     			<div class="col-sm-10">
     				<input type="file" name="txtImage" id="txtImage" class="form-control" value="" />
+    			</div>
+    		</div>
+			<div class="form-group">
+    			<label for="lblSoLuong" class="col-sm-2 control-label">Quantity(*): </label>
+    			<div class="col-sm-10">
+    				<input type="number" name="txtQty" id="txtQty" class="form-control" placeholder="Quantity" value="" />
     			</div>
     		</div>
 
@@ -173,5 +216,6 @@
 
     			</div>
     		</div>
+			
     	</form>
     </div>
