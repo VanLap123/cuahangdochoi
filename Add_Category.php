@@ -29,7 +29,7 @@
 			$result = pg_query($conn,$sq);
 			if(pg_num_rows($result)==0)
 			{
-				pg_query($conn,"INSERT INTO Category (CategoryID, CategoryName) VALUES ('$id', '$name')");
+				pg_query($conn1,"INSERT INTO Category (CategoryID, CategoryName) VALUES ('$id', '$name')");
 				echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
 			}
 			else

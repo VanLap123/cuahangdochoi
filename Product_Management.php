@@ -41,7 +41,7 @@
         <table id="tableproduct" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                   
+                    <th><strong>No</strong></th>
                     <th><strong>Product ID</strong></th>
                     <th><strong>Shop ID</strong></th>
                     <th><strong>Supplier ID</strong></th>
@@ -50,8 +50,8 @@
                     <th><strong>Import Price</strong></th>
                     <th><strong>Sale Price</strong></th>
                     <th><strong>Description</strong></th>
-                    <th><strong>Image</strong></th>
                     <th><strong>Quantity</strong></th>
+                    <th><strong>Image</strong></th>
                     <th><strong>Edit</strong></th>
                     <th><strong>Delete</strong></th>
                 </tr>
@@ -61,29 +61,33 @@
                 <?php
                 include_once("connection.php");
                 $No = 1;
-                $result = pg_query($conn, "SELECT Product_ID, Product_Name, Price, Pro_qty, Pro_image, Cat_Name
-                    FROM product a, category b
-                    WHERE a.Cat_ID = b.Cat_ID
-                    ORDER BY ProDate DESC");
+                $result = pg_query($conn, "SELECT ProductID, CategoryID, ShopID, SupplierID, ProductName, ImportPrice, SalePrice,Descriptions, Quantity, Pro_image
+                    FROM Product a, Category b, Shop c, Supplier d
+                    WHERE a.CategoryID = b.CategoryID, a.ShopID=c.ShopID, a.SupplierID=d.SupplierID");
                 while ($row = pg_fetch_array($result)) {
                 ?>
                     <tr>
                         <td><?php echo $No; ?></td>
-                        <td><?php echo $row["Product_ID"]; ?></td>
-                        <td><?php echo $row["Product_Name"]; ?></td>
-                        <td><?php echo $row["Price"]; ?></td>
-                        <td><?php echo $row["Pro_qty"]; ?></td>
-                        <td><?php echo $row["Cat_Name"]; ?></td>
+                        <td><?php echo $row["ProductID"]; ?></td>
+                        <td><?php echo $row["CategoryID"]; ?></td>
+                        <td><?php echo $row["ShopID"]; ?></td>
+                        <td><?php echo $row["SuppierID"]; ?></td>
+                        <td><?php echo $row["ProductName"]; ?></td>
+                        <td><?php echo $row["ImportPrice"]; ?></td>
+                        <td><?php echo $row["Descriptions"]; ?></td>
+                        <td><?php echo $row["SalePrice"]; ?></td>
+                        <td><?php echo $row["Quantity"]; ?></td>
+                       
                         <td align='center' class='columnfunction'>
                             <img src='image/<?php echo $row["Pro_image"]; ?>' border='0' width="50" height="50" />
                         </td>
                         <td align='center' class='columnfunction'>
-                            <a href="?page=update_product&&id=<?php echo $row['Product_ID']; ?>"> <img src="image/edit.png" width="16" height="16" border='0' />
+                            <a href="?page=update_product&&id=<?php echo $row['ProductID']; ?>"> <img src="image/edit.png" width="16" height="16" border='0' />
                                
                             </a>
                         </td>
                         <td align='center' class='columnfunction'>
-                            <a href="Product_Management.php?function=del&&id=<?php echo $row["Product_ID"]; ?>" onclick="return deleteConfirm()">
+                            <a href="Product_Management.php?function=del&&id=<?php echo $row["ProductID"]; ?>" onclick="return deleteConfirm()">
                                 <img src="image/delete.png" width="16" height="16" border='0' />
                             </a>
                         </td>
