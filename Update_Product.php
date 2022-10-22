@@ -6,49 +6,49 @@
 	
 	function bind_Category_List($conn,$selectValue)
 	{
-		$sqlstring = "SELECT CategoryID, CategoryName from Category";
+		$sqlstring = "SELECT categoryid, categoryname from category";
 		$result = pg_query($conn, $sqlstring);
 		echo "<select name='CategoryList' class='form-control'>
 					<option value='0'>Choose category</option>";
 		while ($row = pg_fetch_array($result)) {
 		    if ($row['CategoryID'] == $selectValue) {
-				echo "<option value='" . $row['CategoryID'] . "' selected>" . $row['CategoryName'] . "</option>";
+				echo "<option value='" . $row['categoryid'] . "' selected>" . $row['categoryname'] . "</option>";
 			} else {
-				echo "<option value='" . $row['CategoryID'] . "'>" . $row['CategoryName'] . "</option>";
+				echo "<option value='" . $row['categoryid'] . "'>" . $row['categoryname'] . "</option>";
 			}
 		}
 		
 		echo "</select>";
 	}
 
-	function bind_Shop_List($conn1,$selectValue)
+	function bind_Shop_List($conn,$selectValue)
 	{
-		$sqlstring = "SELECT ShopID, ShopName from Shop";
-		$result = pg_query($conn1, $sqlstring);
+		$sqlstring = "SELECT shopid, shopname from shop";
+		$result = pg_query($conn, $sqlstring);
 		echo "<select name='ShopList' class='form-control'>
 					<option value='0'>Choose shop</option>";
 		while ($row = pg_fetch_array($result)) {
 			if ($row['ShopID'] == $selectValue) {
-				echo "<option value='" . $row['ShopID'] . "' selected>" . $row['ShopName'] . "</option>";
+				echo "<option value='" . $row['shopid'] . "' selected>" . $row['shopname'] . "</option>";
 			} else {
-				echo "<option value='" . $row['ShopID'] . "'>" . $row['ShopName'] . "</option>";
+				echo "<option value='" . $row['shopid'] . "'>" . $row['shopname'] . "</option>";
 			}
 		
 		}
 		echo "</select>";
 	}
 
-	function bind_Supplier_List($conn2,$selectValue)
+	function bind_Supplier_List($conn,$selectValue)
 	{
-		$sqlstring = "SELECT SupplierID, SupplierName from Supplier";
-		$result = pg_query($conn2, $sqlstring);
+		$sqlstring = "SELECT supplier_id, supplier_name from Supplier";
+		$result = pg_query($conn, $sqlstring);
 		echo "<select name='SupplierList' class='form-control'>
 					<option value='0'>Choose supplier</option>";
 		while ($row = pg_fetch_array($result)) {
 			if ($row['SupplierID'] == $selectValue) {
-				echo "<option value='" . $row['SupplierID'] . "' selected>" . $row['SupplierName'] . "</option>";
+				echo "<option value='" . $row['supplier_id'] . "' selected>" . $row['supplier_name'] . "</option>";
 			} else {
-				echo "<option value='" . $row['SupplierID'] . "'>" . $row['SupplierName'] . "</option>";
+				echo "<option value='" . $row['supplier_id'] . "'>" . $row['supplier_name'] . "</option>";
 			}
 		}
 		
@@ -58,14 +58,15 @@
 
 	if (isset($_GET["id"])) {
 		$id = $_GET["id"];
-		$sqlstring = "SELECT ProductID, ShopID, SupplierID, CategoryID, ProductName, ImportPrice, SalePrice, Descriptions,Pro_image, Quantity
-						FROM Product WHERE ProductID = '$id'";
+		$sqlstring = "SELECT productid, shopid, supplier_id, categoryid, productname, importprice, saleprice, descriptions, proimage, quantity
+						FROM product WHERE productid = '$id'";
 		$result = pg_query($conn, $sqlstring);
 		$row = pg_fetch_array($result);
 
-		$category = $row["ShopID"];
-		$category = $row["SupplierID"];
-		$category = $row["CategoryID"];
+		$productid = $row["productid"];
+		$shopid = $row["shopid"];
+		$supplierid = $row["supplierid"];
+		$categoryid = $row["categoryid"];
 		$proname = $row["ProductName"];
 		$importprice = $row["ImportPrice"];
 		$saleprice = $row["SalePrice"];
@@ -88,7 +89,7 @@
     			<label for="" class="col-sm-2 control-label">Shop ID(*): </label>
     			<div class="col-sm-10">
     				<?php
-					bind_Shop_List($conn1);
+					bind_Shop_List($conn);
 					?>
     			</div>
     		</div>
@@ -96,7 +97,7 @@
     			<label for="" class="col-sm-2 control-label">Supplier ID(*): </label>
     			<div class="col-sm-10">
     				<?php
-					bind_Supplier_List($conn2);
+					bind_Supplier_List($conn);
 					?>
     			</div>
     		</div>

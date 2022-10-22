@@ -26,6 +26,8 @@
 							<ul class="menu_child">
 								<li><a href="?page=category_management">Category</a></li>
 								<li><a href="?page=product_management">Product</a></li>
+                <li><a href="?page=shop_management">Shop</a></li>
+                <li><a href="?page=supplier_management">Supplier</a></li>
 
 							</ul>
 						</li>
@@ -123,6 +125,22 @@ function showSlides() {
         elseif($page=="product_management")
         {
             include_once("Product_Management.php");
+        }
+        elseif($page=="shop_management")
+        {
+            include_once("Shop_Management.php");
+        }
+        elseif($page=="add_shop")
+        {
+            include_once("Add_shop.php");
+        }
+        elseif($page=="supplier_management")
+        {
+            include_once("Supplier_Management.php");
+        }
+        elseif($page=="add_supplier")
+        {
+            include_once("Add_Supplier.php");
         }
         elseif($page=="add_category")
         {

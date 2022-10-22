@@ -1,4 +1,4 @@
-<?php 
+h<?php 
         if(isset($_SESSION["admin"]) && $_SESSION["admin"]!=1)
         {
             echo "<script>alert('You are not administrator')</sript>";
@@ -22,11 +22,11 @@
     if (isset($_GET["function"]) == "del") {
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
-            $result = pg_query($conn,"SELECT Pro_image from Product where ProductID='$id'");
+            $result = pg_query($conn,"SELECT proimage from product where productid='$id'");
             $image = pg_fetch_array($result);
             $del = $image["Pro_image"];
             unlink("image/$del");
-            pg_query($conn, "delete from product where Product_ID='$id'");
+            pg_query($conn, "delete from product where product='$id'");
             
         }
     }
@@ -61,33 +61,32 @@
                 <?php
                 include_once("connection.php");
                 $No = 1;
-                $result = pg_query($conn, "SELECT ProductID, CategoryID, ShopID, SupplierID, ProductName, ImportPrice, SalePrice,Descriptions, Quantity, Pro_image
-                    FROM Product a, Category b, Shop c, Supplier d
-                    WHERE a.CategoryID = b.CategoryID, a.ShopID=c.ShopID, a.SupplierID=d.SupplierID");
+                $result = pg_query($conn, "SELECT productid, shopid, supplier_id,categoryid, productname, importprice, saleprice, descriptions, quantity, proimage FROM product");
+            
                 while ($row = pg_fetch_array($result)) {
                 ?>
                     <tr>
                         <td><?php echo $No; ?></td>
-                        <td><?php echo $row["ProductID"]; ?></td>
-                        <td><?php echo $row["CategoryID"]; ?></td>
-                        <td><?php echo $row["ShopID"]; ?></td>
-                        <td><?php echo $row["SuppierID"]; ?></td>
-                        <td><?php echo $row["ProductName"]; ?></td>
-                        <td><?php echo $row["ImportPrice"]; ?></td>
-                        <td><?php echo $row["Descriptions"]; ?></td>
-                        <td><?php echo $row["SalePrice"]; ?></td>
-                        <td><?php echo $row["Quantity"]; ?></td>
+                        <td><?php echo $row["productid"]; ?></td>
+                        <td><?php echo $row["shopid"]; ?></td>
+                        <td><?php echo $row["supplier_id"]; ?></td>
+                        <td><?php echo $row["categoryid"]; ?></td>
+                        <td><?php echo $row["productname"]; ?></td>
+                        <td><?php echo $row["importprice"]; ?></td>
+                        <td><?php echo $row["saleprice"]; ?></td>
+                        <td><?php echo $row["descriptions"]; ?></td>
+                        <td><?php echo $row["quantity"]; ?></td>
                        
                         <td align='center' class='columnfunction'>
-                            <img src='image/<?php echo $row["Pro_image"]; ?>' border='0' width="50" height="50" />
+                            <img src='image/<?php echo $row["proimage"]; ?>' border='0' width="50" height="50" />
                         </td>
                         <td align='center' class='columnfunction'>
-                            <a href="?page=update_product&&id=<?php echo $row['ProductID']; ?>"> <img src="image/edit.png" width="16" height="16" border='0' />
+                            <a href="?page=update_product&&id=<?php echo $row['productid']; ?>"> <img src="image/edit.png" width="16" height="16" border='0' />
                                
                             </a>
                         </td>
                         <td align='center' class='columnfunction'>
-                            <a href="Product_Management.php?function=del&&id=<?php echo $row["ProductID"]; ?>" onclick="return deleteConfirm()">
+                            <a href="Product_Management.php?function=del&&id=<?php echo $row["productid"]; ?>" onclick="return deleteConfirm()">
                                 <img src="image/delete.png" width="16" height="16" border='0' />
                             </a>
                         </td>

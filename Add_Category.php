@@ -25,12 +25,12 @@
 			echo "<ul>$err</ul>";
 		}
 		else{
-			$sq="Select * from Category where CategoryID='$id' or CategoryName='$name'";
+			$sq="Select * from category where categoryid='$id' or categoryname='$name'";
 			$result = pg_query($conn,$sq);
 			if(pg_num_rows($result)==0)
 			{
-				pg_query($conn1,"INSERT INTO Category (CategoryID, CategoryName) VALUES ('$id', '$name')");
-				echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
+				pg_query($conn,"INSERT INTO category (categoryid, categoryname) VALUES ('$id', '$name')");
+				//echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
 			}
 			else
 			{

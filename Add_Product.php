@@ -5,36 +5,36 @@
 	include_once("connection.php");
 	function bind_Category_List($conn)
 	{
-		$sqlstring = "SELECT CategoryID, CategoryName from Category";
+		$sqlstring = "SELECT categoryid, categoryname from category";
 		$result = pg_query($conn, $sqlstring);
 		echo "<select name='CategoryList' class='form-control'>
 					<option value='0'>Choose category</option>";
 		while ($row = pg_fetch_array($result)) {
-			echo "<option value='" . $row['CategoryID'] . "'>" . $row['CategoryName'] . "</option>";
+			echo "<option value='" . $row['categoryid'] . "'>" . $row['categoryname'] . "</option>";
 		}
 		echo "</select>";
 	}
 
-	function bind_Shop_List($conn1)
+	function bind_Shop_List($conn)
 	{
-		$sqlstring = "SELECT ShopID, ShopName from Shop";
-		$result = pg_query($conn1, $sqlstring);
+		$sqlstring = "SELECT shopid, shopname from shop";
+		$result = pg_query($conn, $sqlstring);
 		echo "<select name='ShopList' class='form-control'>
 					<option value='0'>Choose shop</option>";
 		while ($row = pg_fetch_array($result)) {
-			echo "<option value='" . $row['ShopID'] . "'>" . $row['ShopName'] . "</option>";
+			echo "<option value='" . $row['shopid'] . "'>" . $row['shopname'] . "</option>";
 		}
 		echo "</select>";
 	}
 
-	function bind_Supplier_List($conn2)
+	function bind_Supplier_List($conn)
 	{
-		$sqlstring = "SELECT SupplierID, SupplierName from Supplier";
-		$result = pg_query($conn2, $sqlstring);
+		$sqlstring = "SELECT supplier_id, supplier_name from supplier";
+		$result = pg_query($conn, $sqlstring);
 		echo "<select name='SupplierList' class='form-control'>
 					<option value='0'>Choose supplier</option>";
 		while ($row = pg_fetch_array($result)) {
-			echo "<option value='" . $row['SupplierID'] . "'>" . $row['SupplierName'] . "</option>";
+			echo "<option value='" . $row['supplier_id'] . "'>" . $row['supplier_name'] . "</option>";
 		}
 		echo "</select>";
 	}
@@ -66,9 +66,13 @@
 		{
 			$err.="<li>Choose product category, please</li>";
 		}
-		if(!is_numeric($price))
+		if(!is_numeric($priceSale))
 		{
 			$err.="<li>Product price must be number</li>";
+		}
+		if(!is_numeric($priceImport))
+		{
+			$err.="<li>Import price must be number</li>";
 		}
 		if(!is_numeric($qty))
 		{
@@ -84,14 +88,14 @@
 			{
 				if($pic["size"] < 614400)
 				{
-					$sq = "SELECT * FROM Product WHERE ProductID = '$id' or ProductName = '$proname'";
+					$sq = "SELECT * FROM product WHERE productid = '$id' or productname = '$proname'";
 					$result = pg_query($conn, $sq);
 					if(pg_num_rows($result) == 0)
 					{
 						copy($pic['tmp_name'], "image/".$pic['name']);
 						$filePic = $pic['name'];
-						$sqlstring = "INSERT INTO Product (ProductID, ShopID, SupplierID, CategoryID, ProductName, ImportPrice, SalePrice, Descriptions,Pro_image, Quantity)
-										VALUES ('$id',$shopID,$supplierID,$category,$proname,$priceImport,$priceSale,$detail,$pic,$qty)";
+						$sqlstring = "INSERT INTO product (productid, shopid, supplier_id, categoryid, productname, importprice, saleprice, descriptions, proimage, quantity)
+										VALUES ('$id','$shopID','$supplierID','$category','$proname','$priceImport','$priceSale','$detail','$filePic',$qty)";
 						pg_query($conn, $sqlstring);
 						echo '<meta http-equiv="refresh" content = "0; URL=?page=product_management"/>';
 					}
@@ -126,7 +130,7 @@
     			<label for="" class="col-sm-2 control-label">Shop ID(*): </label>
     			<div class="col-sm-10">
     				<?php
-					bind_Shop_List($conn1);
+					bind_Shop_List($conn);
 					?>
     			</div>
     		</div>
@@ -134,7 +138,7 @@
     			<label for="" class="col-sm-2 control-label">Supplier ID(*): </label>
     			<div class="col-sm-10">
     				<?php
-					bind_Supplier_List($conn2);
+					bind_Supplier_List($conn);
 					?>
     			</div>
     		</div>

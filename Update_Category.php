@@ -7,10 +7,10 @@
 	if(isset($_GET["id"]))
 	{
 		$id = $_GET["id"];
-		$result = pg_query($conn, "SELECT * FROM Category WHERE CategoryID='$id'");
+		$result = pg_query($conn, "SELECT * FROM category WHERE categoryid='$id'");
 		$row = pg_fetch_array($result);
-		$cat_id = $row['CategoryID'];
-		$cat_name = $row['CategoryName'];
+		$cat_id = $row['categoryid'];
+		$cat_name = $row['categoryname'];
 		
 	
 	?>
@@ -40,14 +40,6 @@
 							</div>
 					</div>
                     
-                    <div class="form-group">
-						    <label for="txtMoTa" class="col-sm-2 control-label">Description(*):  </label>
-							<div class="col-sm-10">
-								  <input type="text" name="txtDes" id="txtDes" class="form-control" placeholder="Description" 
-								  value='<?php echo $cat_des ?>'>
-							</div>
-					</div>
-                    
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 						      <input type="submit"  class="btn btn-primary" name="btnUpdate" id="btnUpdate" value="Update"/>
@@ -72,11 +64,11 @@
 			echo "<ul>$err</ul>";
 		}
 		else{
-			$sq="Select * from Category where CategoryID != '$id' and CategoryName= '$name'";
+			$sq="Select * from category where categoryid != '$id' and categoryname= '$name'";
 			$result = pg_query($conn, $sq);
 			if(pg_num_rows($result)==0)
 			{
-				pg_query($conn, "UPDATE Category SET CategoryName = '$name' WHERE Cat_ID='$id'");
+				pg_query($conn, "UPDATE category SET categoryname = '$name' WHERE categoryid='$id'");
 				echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
 			}
 			else
