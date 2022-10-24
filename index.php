@@ -147,7 +147,7 @@ function showSlides() {
         }
         elseif($page=="add_shop")
         {
-            include_once("Add_shop.php");
+            include_once("Add_Shop.php");
         }
         elseif($page=="supplier_management")
         {
