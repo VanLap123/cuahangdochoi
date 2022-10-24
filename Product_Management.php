@@ -1,4 +1,4 @@
-h<?php 
+<?php 
         if(isset($_SESSION["admin"]) && $_SESSION["admin"]!=1)
         {
             echo "<script>alert('You are not administrator')</sript>";
@@ -22,11 +22,12 @@ h<?php
     if (isset($_GET["function"]) == "del") {
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
-            $result = pg_query($conn,"SELECT proimage from product where productid='$id'");
-            $image = pg_fetch_array($result);
-            $del = $image["Pro_image"];
-            unlink("image/$del");
-            pg_query($conn, "delete from product where product='$id'");
+            //$result = pg_query($conn,"SELECT proimage from product where productid='$id'");
+            //$image = pg_fetch_array($result);
+            //$del = $image["proimage"];
+            //unlink("image/$del");
+            pg_query($conn, "delete from product where productid='$id'");
+          
             
         }
     }
@@ -86,7 +87,7 @@ h<?php
                             </a>
                         </td>
                         <td align='center' class='columnfunction'>
-                            <a href="Product_Management.php?function=del&&id=<?php echo $row["productid"]; ?>" onclick="return deleteConfirm()">
+                            <a href="?page=product_management&&function=del&&id=<?php echo $row["productid"]; ?>" onclick="return deleteConfirm()">
                                 <img src="image/delete.png" width="16" height="16" border='0' />
                             </a>
                         </td>

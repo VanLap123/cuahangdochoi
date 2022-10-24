@@ -4,6 +4,7 @@
 <head>
 	<title>Lucky Shop</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <?php
  session_start();
@@ -26,8 +27,8 @@
 							<ul class="menu_child">
 								<li><a href="?page=category_management">Category</a></li>
 								<li><a href="?page=product_management">Product</a></li>
-                <li><a href="?page=shop_management">Shop</a></li>
-                <li><a href="?page=supplier_management">Supplier</a></li>
+                                <li><a href="?page=shop_management">Shop</a></li>
+                                <li><a href="?page=supplier_management">Supplier</a></li>
 
 							</ul>
 						</li>
@@ -106,6 +107,16 @@ function showSlides() {
   setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
 </script>
+<div>
+         <form class="d-flex" action="?page=search" method="POST">
+          <input class="form-control me-2" type="search" placeholder="Search" name="txtSearch" aria-label="Search">
+          <button class="btn btn-outline-success" name="btnsearch" type="submit">Search</button>
+        </form>
+
+
+</div>
+
+
 <?php
 	if(isset($_GET['page']))
     {
@@ -117,6 +128,10 @@ function showSlides() {
         elseif($page=="login")
         {
             include_once("Login.php");
+        }
+        elseif($page=="search")
+        {
+            include_once("Search.php");
         }
         elseif($page=="category_management")
         {

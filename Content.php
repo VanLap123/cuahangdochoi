@@ -14,12 +14,12 @@
   		margin-left: 100px;
   	}
   </style>
-
+   
 
   <div class="row">
   	<?php
 		// 	include_once("database.php");
-		$result = pg_query($conn, "SELECT * FROM Product");
+		$result = pg_query($conn, "SELECT * FROM product");
 
 		while ($row = pg_fetch_array($result)) {
 		?>
@@ -27,15 +27,15 @@
   		<div class="col-2th">
   			<div class="card">
   				<div>
-  					<img src="image/<?php echo $row['Pro_image'] ?>" width="260" height="220" alt="">
+  					<img src="image/<?php echo $row['proimage'] ?>" width="260" height="220" alt="">
   				</div>
 
   				<div>
-  					<h3><a href="#" class="text-default mb-2" data-abc="true"><?php echo  $row['Product_Name'] ?></a></h3>
+  					<h3> <?php echo  $row['productname'] ?></h3>
   				</div>
 
   				<div>
-  					<h3 class="mb-0 font-weight-semibold">$<?php echo  $row['Price'] ?></h3>
+  					<h3 class="mb-0 font-weight-semibold">$<?php echo  $row['saleprice'] ?></h3>
   				</div>
   			</div>
   		</div>
