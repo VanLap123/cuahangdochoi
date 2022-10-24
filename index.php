@@ -5,7 +5,48 @@
 	<title>Lucky Shop</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<style>
+body {
+  font-family: Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
 <?php
  session_start();
  include_once("connection.php");
@@ -15,14 +56,23 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-2 menu">
-					<a>LUCKY SHOP</a>
+					<a>Toys SHOP</a>
 				</div>
 				<div class="col-2">
 
 				</div>
 				<div class="col-8 menu">
-					<ul>
-						<li><a href="index.php">HOME</a></li>
+				<ul>
+                        <li><form class="example" action="?page=search" style="margin:auto;max-width:300px" method="POST">
+                           <input type="text" placeholder="Search.." name="txtSearch">
+                            <button type="submit" name="btnsearch" ><i class="fa fa-search"></i></button>
+                        </form></li>
+   
+						
+						<?php
+						if (isset($_SESSION['us']) && $_SESSION['us'] != "") {
+						?>
+                            <li><a href="index.php">HOME</a></li>
 						<li><a href="">Management</a>
 							<ul class="menu_child">
 								<li><a href="?page=category_management">Category</a></li>
@@ -32,9 +82,6 @@
 
 							</ul>
 						</li>
-						<?php
-						if (isset($_SESSION['us']) && $_SESSION['us'] != "") {
-						?>
 							<li>
 								<a href="?page=update_customer">
 									Account: <?php echo $_SESSION['us'] ?>
@@ -49,7 +96,7 @@
 						<?php
 						}
 						?>
-					</ul>
+				</ul>
 				</div>
 			</div>
 		</div>
@@ -107,14 +154,7 @@ function showSlides() {
   setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
 </script>
-<div>
-         <form class="d-flex" action="?page=search" method="POST">
-          <input class="form-control me-2" type="search" placeholder="Search" name="txtSearch" aria-label="Search">
-          <button class="btn btn-outline-success" name="btnsearch" type="submit">Search</button>
-        </form>
 
-
-</div>
 
 
 <?php

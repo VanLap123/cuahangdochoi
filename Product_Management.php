@@ -1,11 +1,9 @@
-<?php 
-        if(isset($_SESSION["admin"]) && $_SESSION["admin"]!=1)
-        {
-            echo "<script>alert('You are not administrator')</sript>";
-            echo '<meta http-equiv="refresh" content="0;URL=index.php"/>';
-        }
-        else{
-    ?>
+<?php
+    if (isset($_SESSION['admin']) && $_SESSION['admin'] != 1) {
+        echo "<script> alert('You are not administrator') </sript>";
+        echo '<meta http-equiv="refresh" content="0;URL=index.php"/>';
+    } else {
+?>
 <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script>
@@ -26,7 +24,7 @@
             //$image = pg_fetch_array($result);
             //$del = $image["proimage"];
             //unlink("image/$del");
-            pg_query($conn, "delete from product where productid='$id'");
+            pg_query($conn, "DELETE from product where productid='$id'");
           
             
         }
@@ -87,7 +85,7 @@
                             </a>
                         </td>
                         <td align='center' class='columnfunction'>
-                            <a href="?page=product_management&&function=del&&id=<?php echo $row["productid"]; ?>" onclick="return deleteConfirm()">
+                            <a href="?page=product_managementfunction=del&&id=<?php echo $row["productid"]; ?>" onclick="return deleteConfirm()">
                                 <img src="image/delete.png" width="16" height="16" border='0' />
                             </a>
                         </td>
@@ -103,4 +101,5 @@
  </form>
 <?php
 }
+
 ?>

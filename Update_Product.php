@@ -102,7 +102,7 @@
     			</div>
     		</div>
 			<div class="form-group">
-    			<label for="" class="col-sm-2 control-label">Product category(*): </label>
+    			<label for="" class="col-sm-2 control-label">Category ID(*): </label>
     			<div class="col-sm-10">
     				<?php
 					bind_Category_List($conn);
@@ -192,12 +192,15 @@
 	if (isset($_POST["btnUpdate"])) {
 		$id = $_POST["txtID"];
 		$proname = $_POST["txtName"];
-		$short = $_POST["txtShort"];
 		$detail = $_POST["txtDetail"];
-		$price = $_POST["txtPrice"];
+		$priceimport = $_POST["txtImportPrice"];
+		$pricesale = $_POST["txtSalePrice"];
 		$qty = $_POST["txtQty"];
 		$pic = $_FILES["txtImage"];
 		$category = $_POST["CategoryList"];
+		$shop =$_POST["ShopList"];
+		$supplier=$POST["SupplierList"];
+
 		$err = "";
 
 		if (trim($id) == "") {
@@ -206,11 +209,20 @@
 		if (trim($proname) == "") {
 			$err .= "<li>Enter product Name, please</li>";
 		}
-		if ($category == "0") {
+		if (trim($category) == "") {
 			$err .= "<li>Choose product category, please</li>";
 		}
-		if (!is_numeric($price)) {
-			$err .= "<li>Product price must be number</li>";
+		if (trim($shop) == "") {
+			$err .= "<li>Choose shop, please</li>";
+		}
+		if (trim($supplier) == "") {
+			$err .= "<li>Choose supplier, please</li>";
+		}
+		if (!is_numeric($priceimport)) {
+			$err .= "<li>Import price must be number</li>";
+		}
+		if (!is_numeric($pricesale)) {
+			$err .= "<li>Sale price must be number</li>";
 		}
 		if (!is_numeric($qty)) {
 			$err .= "<li>Product quantity must be number</li>";
@@ -218,16 +230,16 @@
 			if ($pic['name'] != "") {
 				if ($pic["type"] == "image/jpg" || $pic["type"] == "image/jpeg" || $pic["type"] == "image/png" || $pic["type"] == "image/gif") {
 					if ($pic["size"] < 614400) {
-						$sq = "SELECT * FROM product WHERE Product_ID = '$id' or Product_Name = '$proname'";
+						$sq = "SELECT * FROM product WHERE productid = '$id' or productname = '$proname'";
 						$result = pg_query($conn, $sq);
 						if (pg_num_rows($result) == 0) {
 							copy($pic['tmp_name'], "img/" . $pic['name']);
 							$filePic = $pic['name'];
 							$sqlstring = "UPDATE product SET 
-							Product_Name ='$proname', Price='$price', SmallDesc='$short', 
+							productname ='$proname', Price='$price', SmallDesc='$short', 
 							DetailDesc='$detail', Pro_qty='$qty',
 							Pro_image='$filePic', Cat_ID='$category',
-							ProDate='".date('Y-m-d H:i:s')."' WHERE Product_ID='$id'";
+							ProDate='".date('Y-m-d H:i:s')."' WHERE productid='$id'";
 							pg_query($conn, $sqlstring);
 							echo '<meta http-equiv="refresh" content = "0; URL=?page=product_management"/>';
 						} else {
