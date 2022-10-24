@@ -47,7 +47,7 @@
 			if(pg_num_rows($result)==0)
 			{
 				pg_query($conn,"INSERT INTO shop (shopid, shopname, shopaddress, shopemail, shopphonenumber) VALUES ('$id', '$name','$address','$email','$phone')");
-				//echo '<meta http-equiv="refresh" content="0;URL=?page=shop_management"/>';
+				echo '<meta http-equiv="refresh" content="0;URL=?page=shop_management"/>';
 			}
 			else
 			{

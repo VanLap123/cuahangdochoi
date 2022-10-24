@@ -43,7 +43,7 @@
 			if(pg_num_rows($result)==0)
 			{
 				pg_query($conn,"INSERT INTO supplier (supplier_id, supplier_name, supplier_address, supplier_email) VALUES ('$id', '$name','$address','$email')");
-				//echo '<meta http-equiv="refresh" content="0;URL=?page=supplier_management"/>';
+				echo '<meta http-equiv="refresh" content="0;URL=?page=supplier_management"/>';
 			}
 			else
 			{

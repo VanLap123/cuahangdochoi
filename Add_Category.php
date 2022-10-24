@@ -30,7 +30,7 @@
 			if(pg_num_rows($result)==0)
 			{
 				pg_query($conn,"INSERT INTO category (categoryid, categoryname) VALUES ('$id', '$name')");
-				//echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
+				echo '<meta http-equiv="refresh" content="0;URL=?page=category_management"/>';
 			}
 			else
 			{
