@@ -71,28 +71,49 @@ form.example::after {
 						
 						<?php
 						if (isset($_SESSION['us']) && $_SESSION['us'] != "") {
+              if (isset($_SESSION['admin']) && $_SESSION['admin'] != 1){
 						?>
-                            <li><a href="index.php">HOME</a></li>
-						<li><a href="">Management</a>
-							<ul class="menu_child">
-								<li><a href="?page=category_management">Category</a></li>
-								<li><a href="?page=product_management">Product</a></li>
-                                <li><a href="?page=shop_management">Shop</a></li>
-                                <li><a href="?page=supplier_management">Supplier</a></li>
+                  <li>
+                      <a href="?page=update_customer">
+                        Account: <?php echo $_SESSION['us'] ?>
+                      </a>
+                    </li>
+                    <li><a href="?page=logout">Logout</a></li>
+            
+               
 
-							</ul>
-						</li>
-							<li>
-								<a href="?page=update_customer">
-									Account: <?php echo $_SESSION['us'] ?>
-								</a>
-							</li>
-							<li><a href="?page=logout">Logout</a></li>
+                  <?php
+                  } else {
+                    ?>
+                    
+
+                      <li><a href="index.php">HOME</a></li>
+                      <li><a href="">Management</a>
+                                    <ul class="menu_child">
+                                      <li><a href="?page=category_management">Category</a></li>
+                                      <li><a href="?page=product_management">Product</a></li>
+                                      <li><a href="?page=shop_management">Shop</a></li>
+                                      <li><a href="?page=supplier_management">Supplier</a></li>
+                                    </ul>
+                    </li>
+
+                        <li>
+                          <a href="?page=update_customer">
+                          Account: <?php echo $_SESSION['us'] ?>
+                          </a>
+                      </li>  
+                      <li><a href="?page=logout">Logout</a></li>
+                  <?php
+                  }
+                  ?>   
+
+
 						<?php
 						} else {
 						?>
 							<li><a href="?page=login">Login</a></li>
 							<li><a href="?page=register">Register</a></li>
+
 						<?php
 						}
 						?>
