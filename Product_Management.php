@@ -51,7 +51,6 @@
                     <th><strong>Description</strong></th>
                     <th><strong>Quantity</strong></th>
                     <th><strong>Image</strong></th>
-                    <th><strong>Edit</strong></th>
                     <th><strong>Delete</strong></th>
                 </tr>
              </thead>
@@ -79,11 +78,7 @@
                         <td align='center' class='columnfunction'>
                             <img src='image/<?php echo $row["proimage"]; ?>' border='0' width="50" height="50" />
                         </td>
-                        <td align='center' class='columnfunction'>
-                            <a href="?page=update_product&&id=<?php echo $row['productid']; ?>"> <img src="image/edit.png" width="16" height="16" border='0' />
-                               
-                            </a>
-                        </td>
+                       
                         <td align='center' class='columnfunction'>
                             <a href="?page=product_management&&function=del&&id=<?php echo $row["productid"]; ?>" onclick="return deleteConfirm()">
                                 <img src="image/delete.png" width="16" height="16" border='0' />
